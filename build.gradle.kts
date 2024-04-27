@@ -49,6 +49,9 @@ dependencies {
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
 	implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
 
+	// swagger-ui
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
+
 	// db set
 	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
 	runtimeOnly("org.postgresql:postgresql")
