@@ -1,6 +1,8 @@
 package com.tony.string.domain
 
+import com.tony.string.controller.request.SignUpRequestDTO
 import jakarta.persistence.*
+import org.springframework.security.crypto.password.PasswordEncoder
 import java.time.LocalDateTime
 
 @Entity
@@ -32,4 +34,19 @@ data class Member(
     @Column(name = "birth_date")
     var birthDate: LocalDateTime?,
 
-) : BaseEntity()
+) : BaseEntity() {
+
+    //static 함수는 companion object 안에 정의한다.
+    companion object {
+        // 파라미터에 PasswordEncoder 추가
+        fun fromDto(dto: SignUpRequestDTO, encoder: PasswordEncoder) = Member(
+            username = dto.username,
+            email = dto.email,
+            password = encoder.encode(dto.password), //  비밀번호가 반드시 암호화된다.
+            information = dto.information ?: "",
+            profileImageUrl = dto.profileImageUrl,
+            location = dto.location,
+            birthDate = dto.birthDate
+        )
+    }
+}
