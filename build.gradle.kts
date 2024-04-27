@@ -40,8 +40,11 @@ dependencies {
 	// spring
 	implementation("org.springframework.boot:spring-boot-starter-web")
 
-	// spring security
+	// spring security, jwt
 	implementation("org.springframework.boot:spring-boot-starter-security")
+	implementation("io.jsonwebtoken:jjwt-api:0.12.5")
+	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.5")
+	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.5")
 
 	// db set
 	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
