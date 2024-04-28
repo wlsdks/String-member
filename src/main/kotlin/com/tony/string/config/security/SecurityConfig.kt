@@ -1,8 +1,16 @@
 package com.tony.string.config.security
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.tony.string.config.security.filter.CustomAuthenticationFilter
+import com.tony.string.config.security.filter.JwtAuthenticationFilter
+import com.tony.string.config.security.filter.handler.CustomAuthFailureHandler
+import com.tony.string.config.security.filter.handler.CustomAuthSuccessHandler
+import com.tony.string.config.security.filter.handler.CustomAuthenticationProvider
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.ProviderManager
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
@@ -16,28 +24,29 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @Configuration
 class SecurityConfig(
     private val jwtAuthenticationFilter: JwtAuthenticationFilter,
-    private val entryPoint: AuthenticationEntryPoint
+    private val entryPoint: AuthenticationEntryPoint,
 ) {
 
-    private val allowedUrls = arrayOf("/", "/swagger-ui/**", "/member/**", "/sign-up", "/sign-in")
+    private val allowedUrls = arrayOf("/", "/swagger-ui/**", "/member/**", "/auth/**")
 
     @Bean
-    fun filterChain(http: HttpSecurity) : SecurityFilterChain {
+    fun passwordEncoder() = BCryptPasswordEncoder()
+
+    @Bean
+    fun filterChain(http: HttpSecurity, customAuthenticationFilter: CustomAuthenticationFilter): SecurityFilterChain {
         return http
             .csrf { it.disable() }
-            .cors { it.disable() } // cors 설정을 해제 (모바일이면 필요없음)
+            .cors { it.disable() }                                          // cors 설정을 해제 (모바일이면 필요없음)
             .authorizeHttpRequests {
                 it.requestMatchers(*allowedUrls).permitAll()
-                    .requestMatchers(PathRequest.toH2Console()).permitAll() // H2 콘솔 접속은 모두에게 허용
                     .anyRequest().authenticated()                           // 그 외의 모든 요청은 인증 필요
             }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .addFilterBefore(jwtAuthenticationFilter, BasicAuthenticationFilter::class.java)
+            .addFilterBefore(customAuthenticationFilter, jwtAuthenticationFilter::class.java)
             .exceptionHandling { it.authenticationEntryPoint(entryPoint) }  // 중앙 집중 예외 처리를 위한 추가
             .build()
     }
 
-    @Bean
-    fun passwordEncoder() = BCryptPasswordEncoder()
 
 }
