@@ -12,10 +12,15 @@ enum class ErrorCode(
     // 스프링 시큐리티 예외
     ACCESS_DENIED("ACCESS_DENIED", "Access is denied."),
     AUTHENTICATION_FAILED("AUTHENTICATION_FAILED", "Authentication failed."),
+    FILTER_USERNAME_PASSWORD_AUTHENTICATION_TOKEN_EXCEPTION(
+        "FILTER_USERNAME_PASSWORD_AUTHENTICATION_TOKEN_EXCEPTION",
+        "UsernamePasswordAuthenticationToken Exception occurred."
+    ),
 
     // 기본 예외, 런타임 예외
     INTERNAL_ERROR("INTERNAL_ERROR", "Internal server error."),
-    RUNTIME_EXCEPTION("RUNTIME_EXCEPTION", "Unexpected runtime error.")
+    RUNTIME_EXCEPTION("RUNTIME_EXCEPTION", "Unexpected runtime error."),
+    IO_EXCEPTION("IO_EXCEPTION", "I/O error occurred."),
 
     // 커스텀 예외 (생길때마다 추가)
 
