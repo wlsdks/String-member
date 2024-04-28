@@ -1,0 +1,24 @@
+### 회원가입
+POST http://localhost:8080/member/signUp
+Content-Type: application/json
+
+{
+  "username": "wlsdks12",
+  "nickname": "wlsdks12",
+  "email": "wlsdks12@naver.com",
+  "password": "wlsdks12",
+  "information": "",
+  "profileImageUrl": "",
+  "location": "",
+  "birthDate": ""
+}
+
+### 로그인 테스트
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "wlsdks12@naver.com",
+  "password": "wlsdks12",
+  "nickname": "wlsdks12"
+}
