@@ -1,5 +1,8 @@
 package com.tony.string.domain
 
+import com.tony.string.config.security.dto.MemberStatus
+import com.tony.string.config.security.dto.RoleType
+import com.tony.string.controller.request.MemberUpdateRequestDTO
 import com.tony.string.controller.request.SignUpRequestDTO
 import jakarta.persistence.*
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -13,8 +16,11 @@ data class Member(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
-    @Column(name = "username", nullable = false, unique = true)
+    @Column(name = "username", nullable = false)
     var username: String,
+
+    @Column(name = "nickname", nullable = false, unique = true)
+    var nickname: String,
 
     @Column(name = "email", nullable = false, unique = true)
     var email: String,
@@ -34,19 +40,43 @@ data class Member(
     @Column(name = "birth_date")
     var birthDate: LocalDateTime?,
 
-) : BaseEntity() {
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    var status: MemberStatus?= MemberStatus.ACTIVE,
+
+    @Column(name = "role_type")
+    @Enumerated(EnumType.STRING)
+    val roleType: RoleType? = RoleType.MEMBER
+
+    ) : BaseEntity() {
 
     //static 함수는 companion object 안에 정의한다.
     companion object {
         // 파라미터에 PasswordEncoder 추가
         fun fromDto(dto: SignUpRequestDTO, encoder: PasswordEncoder) = Member(
             username = dto.username,
+            nickname = dto.nickname,
             email = dto.email,
             password = encoder.encode(dto.password), //  비밀번호가 반드시 암호화된다.
             information = dto.information ?: "",
             profileImageUrl = dto.profileImageUrl,
             location = dto.location,
-            birthDate = dto.birthDate
+            birthDate = dto.birthDate,
+            status = MemberStatus.ACTIVE
         )
     }
+
+    fun change(dto: MemberUpdateRequestDTO) {
+        username = dto.username
+        email = dto.email
+        information = dto.information ?: ""
+        profileImageUrl = dto.profileImageUrl
+        location = dto.location
+        birthDate = dto.birthDate
+    }
+
+    fun passwordChange(encoder: PasswordEncoder, password: String) {
+        this.password = encoder.encode(password)
+    }
+
 }
