@@ -7,6 +7,20 @@ spring:
 
 ---
 
+logging:
+  level:
+    com.tony.string: debug
+#    org.hibernate.SQL: debug
+#    org.hibernate.type: trace
+  file:
+    name: logs/myapp.log  # 로그 파일의 이름과 위치를 설정. 'logs' 폴더 내 'myapp.log' 파일에 로그를 기록.
+    path: logs  # 프로젝트 루트 디렉토리 내부의 'logs' 폴더를 지정
+#    path: /var/logs  # 로그 파일이 저장될 기본 경로 설정. 이 경로는 시스템의 root 디렉터리 아래 'var/logs' 폴더를 의미.
+  pattern:
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"  # 로그 파일에 기록될 메시지의 포맷을 설정. 날짜, 스레드, 로그 레벨, 로거 이름, 메시지 내용 포함.
+
+---
+
 spring:
   security:
     user:
@@ -18,20 +32,14 @@ spring:
     password: 1234
     driver-class-name: org.postgresql.Driver
 
-  p6spy:
-    enable-logging: true
-    multiline: true
-    logging: slf4j
-    tracing:
-      include-parameter-values: true
-
   jpa:
     show-sql: true
     generate-ddl: false
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
+    open-in-view: false
     properties:
       hibernate:
         format_sql: true
-        use_sql_comments: true
+        highlight_sql: true
