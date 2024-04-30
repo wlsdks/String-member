@@ -21,20 +21,11 @@
 - docker 이미지 빌드는 local, prod로 나눔 (dockercompose로 구현)
 - 환경설정(yml)은 local, prod, test 총3개로 분리되어있음 (local, prod는 postgreSQL을 사용하고 test는 h2 db를 사용한다.)
 
-### CI/CD
-- Jenkins
-- Github hook
-- Sonarqube
-
-### 모니터링
-- Prometheus
-- Grafana
-- ELK
-- Slack (알림)
-
-### 성능테스트
-- nGrinder
-- JMeter
+### DevOps
+- **CI/CD**: Jenkins, Github hook, Sonarqube
+- **모니터링**: Prometheus, Grafana, Slack API
+- **로그**: ELK
+- **성능테스트**: nGrinder, JMeter
 
 ### 서버 실행 방법 (local)
 - Dockerfile로 서버를 이미지화 시키고 이 설정을 docker-compose.yml에 연결하여 빌드한 스프링 서버와 postgreSql을 동시에 컨테이너에 올린다.
