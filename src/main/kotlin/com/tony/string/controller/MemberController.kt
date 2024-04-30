@@ -2,7 +2,7 @@ package com.tony.string.controller
 
 import com.tony.string.config.security.role.UserAuthorize
 import com.tony.string.controller.request.MemberUpdateRequestDTO
-import com.tony.string.domain.dto.ApiResponse
+import com.tony.string.controller.response.ApiResponse
 import com.tony.string.service.impl.MemberServiceImpl
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
