@@ -1,6 +1,6 @@
 package com.tony.string.exception
 
-import com.tony.string.controller.response.ApiResponse
+import com.tony.string.controller.response.ResponseDTO
 import com.tony.string.logger
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -18,7 +18,7 @@ class ExceptionHandler {
     fun handleGeneralException(ex: Exception): ResponseEntity<Any> {
         log.error("Exception: ${ex.message}", ex)
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(ApiResponse.error(ErrorCode.INTERNAL_ERROR.code, ErrorCode.INTERNAL_ERROR.message))
+            .body(ResponseDTO.error(ErrorCode.INTERNAL_ERROR.code, ErrorCode.INTERNAL_ERROR.message))
     }
 
     // 런타임 예외
@@ -26,7 +26,7 @@ class ExceptionHandler {
     fun handleRuntimeException(ex: RuntimeException): ResponseEntity<Any> {
         log.error("Exception: ${ex.message}", ex)
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(ApiResponse.error(ErrorCode.RUNTIME_EXCEPTION.code, ErrorCode.RUNTIME_EXCEPTION.message))
+            .body(ResponseDTO.error(ErrorCode.RUNTIME_EXCEPTION.code, ErrorCode.RUNTIME_EXCEPTION.message))
     }
 
     // 커스텀 예외
@@ -34,7 +34,7 @@ class ExceptionHandler {
     fun handleCustomException(ex: CustomException): ResponseEntity<Any> {
         log.error("Exception: ${ex.message}", ex)
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-            .body(ApiResponse.error(ex.errorCode.code, ex.errorCode.message))
+            .body(ResponseDTO.error(ex.errorCode.code, ex.errorCode.message))
     }
 
 //    // jwt 서명 예외
@@ -62,14 +62,14 @@ class ExceptionHandler {
     @ExceptionHandler(AccessDeniedException::class)
     fun handleAccessDeniedException(ex: AccessDeniedException?): ResponseEntity<Any> {
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
-            .body(ApiResponse.error(ErrorCode.ACCESS_DENIED.code, ErrorCode.ACCESS_DENIED.message))
+            .body(ResponseDTO.error(ErrorCode.ACCESS_DENIED.code, ErrorCode.ACCESS_DENIED.message))
     }
 
     // 시큐리티 인증 예외
     @ExceptionHandler(AuthenticationException::class)
     fun handleAuthenticationException(ex: AuthenticationException?): ResponseEntity<Any> {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-            .body(ApiResponse.error(ErrorCode.AUTHENTICATION_FAILED.code, ErrorCode.AUTHENTICATION_FAILED.message))
+            .body(ResponseDTO.error(ErrorCode.AUTHENTICATION_FAILED.code, ErrorCode.AUTHENTICATION_FAILED.message))
     }
 
 }

@@ -1,6 +1,5 @@
 package com.tony.string.service.impl
 
-import com.tony.string.config.security.dto.LogoutDTO
 import com.tony.string.logger
 import com.tony.string.repository.JwtRepository
 import com.tony.string.repository.MemberRepository
