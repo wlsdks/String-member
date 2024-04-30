@@ -5,6 +5,7 @@
 - 언어: Kotlin (java21 기반)
 - ORM: JPA, QueryDsl
 - RDB: h2, postgreSql
+- NoSQL: Redis (SNS의 실시간성 기능에 적용예정)
 - 라이브러리: jwt, lombok, p6spy
 - 배포: Dockerfile, docker-compose
 - api명세: swagger
@@ -17,13 +18,23 @@
 - 서비스는 interface를 적용시켜 OCP를 지키도록 설계
 - Entity와 DTO를 확실하게 분리시킴
 - 서버 전용 CustomException을 선언 (ErrorCode, Handler 작성)
-- 배포는 임시로 local, prod를 나눔 (dockercompose로 임시 구현)
-- yml은 local, prod, test 총3개로 분리되어있음 (local, prod는 postgreSQL을 사용하고 test는 h2 db를 사용한다.)
+- docker 이미지 빌드는 local, prod로 나눔 (dockercompose로 구현)
+- 환경설정(yml)은 local, prod, test 총3개로 분리되어있음 (local, prod는 postgreSQL을 사용하고 test는 h2 db를 사용한다.)
 
 ### CI/CD
 - Jenkins
 - Github hook
 - Sonarqube
+
+### 모니터링
+- Prometheus
+- Grafana
+- ELK
+- Slack (알림)
+
+### 성능테스트
+- nGrinder
+- JMeter
 
 ### 서버 실행 방법 (local)
 - Dockerfile로 서버를 이미지화 시키고 이 설정을 docker-compose.yml에 연결하여 빌드한 스프링 서버와 postgreSql을 동시에 컨테이너에 올린다.
