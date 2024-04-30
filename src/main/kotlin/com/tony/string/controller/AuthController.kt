@@ -1,5 +1,6 @@
 package com.tony.string.controller
 
+import com.tony.string.common.SecurityUtils
 import com.tony.string.config.security.jwt.JwtUtils
 import com.tony.string.controller.response.ResponseDTO
 import com.tony.string.domain.dto.LogoutDTO
@@ -12,7 +13,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class AuthController(
     private val authService: AuthService,
-    private val jwtUtils: JwtUtils
+    private val jwtUtils: JwtUtils,
+    private val securityUtils: SecurityUtils
 ) {
 
     /**
@@ -32,7 +34,7 @@ class AuthController(
         val authorizationHeaderValue = request.getHeader("Authorization")
         val accessToken = jwtUtils.extractAccessToken(authorizationHeaderValue)
 
-        return LogoutDTO.of(securityUtils.getCurrentMemberId(), accessToken)
+        return LogoutDTO.of(securityUtils.getCurrentMemberId(), accessToken!!)
     }
 
 }
