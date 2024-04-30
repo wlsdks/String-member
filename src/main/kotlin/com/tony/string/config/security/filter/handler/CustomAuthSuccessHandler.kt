@@ -1,11 +1,9 @@
 package com.tony.string.config.security.filter.handler
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.tony.string.config.security.dto.JwtMemberInfoDTO
-import com.tony.string.config.security.dto.domain.Logout
 import com.tony.string.config.security.dto.UserDetailsDto
 import com.tony.string.config.security.jwt.JwtUtils
-import com.tony.string.domain.dto.ApiResponse
+import com.tony.string.controller.response.ResponseDTO
 import com.tony.string.service.AuthService
 import com.tony.string.service.JwtService
 import jakarta.servlet.ServletException
@@ -48,16 +46,9 @@ class CustomAuthSuccessHandler(
         val accessToken = jwtUtils.generateAccessToken(jwtMemberInfo)
         val refreshTokenPair = jwtUtils.generateRefreshToken(jwtMemberInfo)
 
-        manageUserSession(jwtMemberInfo, accessToken)
+        // todo: 이미 로그인 되어있는지 확인하는 메서드가 필요한가? 로그인 되어있으면 로그아웃시키고 ?? 어카지 refresh 발급도 해야하는데
         storeRefreshToken(jwtMemberInfo.email, refreshTokenPair)
-        writeResponse(response, jwtMemberInfo.id, accessToken, refreshTokenPair.first)
-    }
-
-    // 로그인된 회원이라면 로그아웃 처리
-    private fun manageUserSession(jwtMemberInfo: JwtMemberInfoDTO, accessToken: String) {
-        if (jwtService.isLoggedIn(jwtMemberInfo.id)) {
-            authService.logout(Logout(jwtMemberInfo.id, accessToken))
-        }
+        writeResponse(response, jwtMemberInfo.memberId, accessToken, refreshTokenPair.first)
     }
 
     // Refresh Token DB에 저장 : 로그인 처리 진행
@@ -77,7 +68,7 @@ class CustomAuthSuccessHandler(
             "accessToken" to accessToken,
             "refreshToken" to refreshToken
         )
-        val responseDto = ApiResponse.success(tokenMap)
+        val responseDto = ResponseDTO.success(tokenMap)
 
         response.characterEncoding = "UTF-8"
         response.contentType = "application/json"

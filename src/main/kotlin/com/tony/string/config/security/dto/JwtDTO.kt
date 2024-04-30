@@ -1,11 +1,11 @@
-package com.tony.string.config.security.dto.domain
+package com.tony.string.config.security.dto
 
 import java.time.LocalDateTime
 
 /**
  * Jwt 도메인 객체
  */
-data class Jwt(
+data class JwtDTO(
     val id: Long,
     val memberId: Long,
     val refreshToken: String,

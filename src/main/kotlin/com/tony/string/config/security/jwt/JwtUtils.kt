@@ -108,7 +108,7 @@ class JwtUtils() {
     ): Map<String, Any?> {
 
         val claims: MutableMap<String, Any?> = HashMap()
-        claims["memberId"] = jwtMemberInfoDTO.id
+        claims["memberId"] = jwtMemberInfoDTO.memberId
         claims["email"] = jwtMemberInfoDTO.email
         claims["nickname"] = jwtMemberInfoDTO.nickname
         claims["type"] = tokenType // Token 종류를 저장

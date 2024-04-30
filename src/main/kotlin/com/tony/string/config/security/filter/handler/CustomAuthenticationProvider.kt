@@ -29,6 +29,8 @@ class CustomAuthenticationProvider(
         // 사용자 로그인 정보 추출
         val token = authentication as UsernamePasswordAuthenticationToken
         val userDetails = fetchUserDetails(token.name)
+
+        // 유효성 검증단계
         validateUserStatus(userDetails)
         validatePassword(token.credentials as String, userDetails)
 

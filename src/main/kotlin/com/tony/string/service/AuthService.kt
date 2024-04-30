@@ -1,8 +1,6 @@
 package com.tony.string.service
 
-import com.tony.string.config.security.dto.domain.Logout
-
 interface AuthService {
-    fun logout(logout: Logout)
+    fun logout(logoutDTO: LogoutDTO)
     fun deactivateMember(memberId: Long): Long?
 }
