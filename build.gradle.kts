@@ -52,9 +52,10 @@ dependencies {
 	// swagger-ui
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
 
-	// db set
+	// postgresql, h2
 	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
 	runtimeOnly("org.postgresql:postgresql")
+	runtimeOnly("com.h2database:h2")
 
 	// jpa, querydsl, p6spy
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
