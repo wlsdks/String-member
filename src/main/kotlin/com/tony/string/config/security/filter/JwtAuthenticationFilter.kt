@@ -49,9 +49,11 @@ class JwtAuthenticationFilter(
     }
 
     // 요청 헤더에서 Authorization 헤더를 읽어 JWT 토큰을 추출합니다.
-    private fun extractToken(authHeader: String): String =
-        authHeader.let { jwtUtils.extractAccessToken(it).toString() }
-
+    private fun extractToken(authHeader: String?): String? {
+        return authHeader?.let {
+            jwtUtils.extractAccessToken(it)
+        }
+    }
 
     // 토큰의 유효성을 검증하는 메서드
     private fun validateToken(token: String?): Boolean =
@@ -71,7 +73,7 @@ class JwtAuthenticationFilter(
 
         // 정보를 추출해서 UsernamePasswordAuthenticationToken 객체 생성
         val authorities = listOf(SimpleGrantedAuthority(role))
-        val tokenMemberInfoDto = JwtMemberInfoDTO.fromDto(memberId, email)
-        return UsernamePasswordAuthenticationToken(tokenMemberInfoDto, null, authorities)
+        val jwtMemberInfoDto = JwtMemberInfoDTO.fromDto(memberId, email)
+        return UsernamePasswordAuthenticationToken(jwtMemberInfoDto, null, authorities)
     }
 }

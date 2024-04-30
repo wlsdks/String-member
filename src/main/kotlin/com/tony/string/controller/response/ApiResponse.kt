@@ -1,4 +1,4 @@
-package com.tony.string.domain.dto
+package com.tony.string.controller.response
 
 class ApiResponse(
     val success: Boolean,

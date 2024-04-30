@@ -1,10 +1,7 @@
 package com.tony.string.exception
 
-import com.tony.string.domain.dto.ApiResponse
+import com.tony.string.controller.response.ApiResponse
 import com.tony.string.logger
-import io.jsonwebtoken.ExpiredJwtException
-import io.jsonwebtoken.MalformedJwtException
-import io.jsonwebtoken.security.SignatureException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.AuthenticationException

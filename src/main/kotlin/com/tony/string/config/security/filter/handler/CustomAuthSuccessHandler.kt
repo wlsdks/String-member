@@ -2,10 +2,10 @@ package com.tony.string.config.security.filter.handler
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.tony.string.config.security.dto.JwtMemberInfoDTO
-import com.tony.string.config.security.dto.domain.Logout
+import com.tony.string.config.security.dto.LogoutDTO
 import com.tony.string.config.security.dto.UserDetailsDto
 import com.tony.string.config.security.jwt.JwtUtils
-import com.tony.string.domain.dto.ApiResponse
+import com.tony.string.controller.response.ApiResponse
 import com.tony.string.service.AuthService
 import com.tony.string.service.JwtService
 import jakarta.servlet.ServletException
@@ -56,7 +56,7 @@ class CustomAuthSuccessHandler(
     // 로그인된 회원이라면 로그아웃 처리
     private fun manageUserSession(jwtMemberInfo: JwtMemberInfoDTO, accessToken: String) {
         if (jwtService.isLoggedIn(jwtMemberInfo.id)) {
-            authService.logout(Logout(jwtMemberInfo.id, accessToken))
+            authService.logout(LogoutDTO(jwtMemberInfo.id, accessToken))
         }
     }
 

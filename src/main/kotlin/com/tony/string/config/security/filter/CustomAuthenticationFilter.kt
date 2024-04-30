@@ -32,6 +32,7 @@ class CustomAuthenticationFilter(
 
     private val objectMapper: ObjectMapper = ObjectMapper()
 
+    // 로그인 url 세팅 (빈 등록과 동시에 초기화한다.)
     @PostConstruct
     fun initialize() {
         super.setAuthenticationManager(authenticationManager)  // AuthenticationManager 설정
