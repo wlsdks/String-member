@@ -2,7 +2,7 @@ package com.tony.string.controller
 
 import com.tony.string.config.security.role.UserAuthorize
 import com.tony.string.controller.request.MemberUpdateRequestDTO
-import com.tony.string.controller.response.ApiResponse
+import com.tony.string.controller.response.ResponseDTO
 import com.tony.string.service.impl.MemberServiceImpl
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -22,16 +22,16 @@ class MemberController(
     @Operation(summary = "회원 정보 조회")
     @GetMapping("/info")
     fun getMemberInfo(@AuthenticationPrincipal user: User) =
-        ApiResponse.success(memberServiceImpl.getMemberInfo(user.username))
+        ResponseDTO.success(memberServiceImpl.getMemberInfo(user.username))
 
     @Operation(summary = "회원 탈퇴")
     @DeleteMapping("/delete")
     fun deleteMember(@AuthenticationPrincipal user: User) =
-        ApiResponse.success(memberServiceImpl.deleteMember(user.username))
+        ResponseDTO.success(memberServiceImpl.deleteMember(user.username))
 
     @Operation(summary = "회원 정보 수정")
     @PutMapping("/update")
     fun updateMember(@AuthenticationPrincipal user: User, @RequestBody request: MemberUpdateRequestDTO) =
-        ApiResponse.success(memberServiceImpl.updateMember(user.username, request))
+        ResponseDTO.success(memberServiceImpl.updateMember(user.username, request))
 
 }
