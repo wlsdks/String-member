@@ -1,7 +1,7 @@
 package com.tony.string.config.security.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.tony.string.domain.Member
+import com.tony.string.domain.MemberEntity
 
 
 /**
@@ -22,8 +22,18 @@ data class JwtMemberInfoDTO(
         fun fromDto(id: Long, email: String): JwtMemberInfoDTO =
             JwtMemberInfoDTO(id, email)
 
-        fun fromEntity(member: Member): JwtMemberInfoDTO =
-            JwtMemberInfoDTO(member.id, member.email, member.password, member.nickname, member.status, member.roleType)
+        fun fromEntity(memberEntity: MemberEntity): JwtMemberInfoDTO =
+            JwtMemberInfoDTO(
+                memberEntity.id,
+                memberEntity.email,
+                memberEntity.password,
+                memberEntity.nickname,
+                memberEntity.status,
+                memberEntity.roleType
+            )
+
+        fun of(id: Long, email: String, username: String, nickname: String, status: MemberStatus?, roleType: RoleType?) =
+            JwtMemberInfoDTO(id, email, null, nickname, status, roleType)
 
     }
 

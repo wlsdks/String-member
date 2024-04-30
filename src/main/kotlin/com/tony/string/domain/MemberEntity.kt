@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(name = "member")
-data class Member(
+data class MemberEntity(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,7 +53,7 @@ data class Member(
     //static 함수는 companion object 안에 정의한다.
     companion object {
         // 파라미터에 PasswordEncoder 추가
-        fun fromDto(dto: SignUpRequestDTO, encoder: PasswordEncoder) = Member(
+        fun fromDto(dto: SignUpRequestDTO, encoder: PasswordEncoder) = MemberEntity(
             username = dto.username,
             nickname = dto.nickname,
             email = dto.email,
