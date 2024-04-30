@@ -8,7 +8,7 @@ import com.tony.string.domain.MemberEntity
  * Security JWT인증 객체
  */
 data class JwtMemberInfoDTO(
-    @JsonProperty("id") val id: Long,
+    @JsonProperty("memberId") val memberId: Long,
     @JsonProperty("email") val email: String,
     @JsonProperty("password") val password: String? = null,
     @JsonProperty("nickname") val nickname: String? = null,
@@ -19,8 +19,8 @@ data class JwtMemberInfoDTO(
     // static 펙토리 메서드
     companion object {
 
-        fun fromDto(id: Long, email: String): JwtMemberInfoDTO =
-            JwtMemberInfoDTO(id, email)
+        fun fromDto(memberId: Long, email: String): JwtMemberInfoDTO =
+            JwtMemberInfoDTO(memberId, email)
 
         fun fromEntity(memberEntity: MemberEntity): JwtMemberInfoDTO =
             JwtMemberInfoDTO(
@@ -32,8 +32,14 @@ data class JwtMemberInfoDTO(
                 memberEntity.roleType
             )
 
-        fun of(id: Long, email: String, username: String, nickname: String, status: MemberStatus?, roleType: RoleType?) =
-            JwtMemberInfoDTO(id, email, null, nickname, status, roleType)
+        fun of(
+            memberId: Long,
+            email: String,
+            username: String,
+            nickname: String,
+            status: MemberStatus?,
+            roleType: RoleType?
+        ) = JwtMemberInfoDTO(memberId, email, username, nickname, status, roleType)
 
     }
 
