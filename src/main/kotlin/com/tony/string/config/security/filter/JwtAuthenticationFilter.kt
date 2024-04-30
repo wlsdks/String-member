@@ -71,7 +71,7 @@ class JwtAuthenticationFilter(
         val email = jwtUtils.getEmailFromToken(token)
         val role = jwtUtils.getRoleFromToken(token)
 
-        // 정보를 추출해서 UsernamePasswordAuthenticationToken 객체 생성
+        // JwtMemberInfoDTO 객체를 생성하고, 이 객체를 UsernamePasswordAuthenticationToken의 principal로 설정한다.
         val authorities = listOf(SimpleGrantedAuthority(role))
         val jwtMemberInfoDto = JwtMemberInfoDTO.fromDto(memberId, email)
         return UsernamePasswordAuthenticationToken(jwtMemberInfoDto, null, authorities)

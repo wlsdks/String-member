@@ -27,10 +27,9 @@ import org.springframework.stereotype.Component
 class CustomAuthenticationFilter(
     private val authenticationManager: AuthenticationManager,
     private val customAuthFailureHandler: CustomAuthFailureHandler,
-    private val customAuthSuccessHandler: CustomAuthSuccessHandler
-) : UsernamePasswordAuthenticationFilter() {
-
+    private val customAuthSuccessHandler: CustomAuthSuccessHandler,
     private val objectMapper: ObjectMapper = ObjectMapper()
+) : UsernamePasswordAuthenticationFilter() {
 
     // 로그인 url 세팅 (빈 등록과 동시에 초기화한다.)
     @PostConstruct
