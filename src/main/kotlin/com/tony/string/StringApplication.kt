@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 
 inline fun <reified T> T.logger() = LoggerFactory.getLogger(T::class.java)!!
 
-@EnableJpaAuditing
 @SpringBootApplication
 class StringApplication
 
