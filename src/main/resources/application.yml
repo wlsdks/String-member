@@ -1,17 +1,10 @@
 spring:
-  profiles:
-    active: local
-
   application:
     name: string
-
----
 
 logging:
   level:
     com.tony.string: debug
-#    org.hibernate.SQL: debug
-#    org.hibernate.type: trace
   file:
     name: logs/myapp.log  # 로그 파일의 이름과 위치를 설정. 'logs' 폴더 내 'myapp.log' 파일에 로그를 기록.
     path: logs  # 프로젝트 루트 디렉토리 내부의 'logs' 폴더를 지정
@@ -22,6 +15,10 @@ logging:
 ---
 
 spring:
+  config:
+    activate:
+      on-profile: local
+#      on-profile: prod
   security:
     user:
       password: 1
