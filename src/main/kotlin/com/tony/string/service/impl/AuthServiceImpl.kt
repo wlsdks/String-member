@@ -1,20 +1,37 @@
 package com.tony.string.service.impl
 
-import com.tony.string.config.security.dto.domain.Logout
+import com.tony.string.config.security.dto.LogoutDTO
+import com.tony.string.logger
+import com.tony.string.repository.JwtRepository
+import com.tony.string.repository.MemberRepository
 import com.tony.string.service.AuthService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Transactional(readOnly = true)
 @Service
-class AuthServiceImpl : AuthService {
+class AuthServiceImpl(
+    private val jwtRepository: JwtRepository,
+    private val memberRepository: MemberRepository
+) : AuthService {
 
-    override fun logout(logout: Logout) {
-        TODO("Not yet implemented")
+    val log = logger()
+
+    /**
+     * 로그아웃 - 리프레시 토큰을 DB에서 제거
+     */
+    override fun logout(logoutDTO: LogoutDTO) {
+        // db에서 refresh token 삭제
+        jwtRepository.deleteJwtEntityByMemberId(logoutDTO.memberId);
+
+        // token blacklist에 추가
+//        jwtRepository.insertTokenBlacklist();
     }
 
-    override fun deactivateMember(memberId: Long): Long? {
-        TODO("Not yet implemented")
-    }
+    /**
+     * 회원 탈퇴
+     */
+    override fun deactivateMember(memberId: Long): Long? =
+        memberRepository.deactivateMember(memberId);
 
 }
