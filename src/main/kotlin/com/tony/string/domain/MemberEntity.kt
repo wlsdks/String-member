@@ -4,7 +4,14 @@ import com.tony.string.config.security.dto.MemberStatus
 import com.tony.string.config.security.dto.RoleType
 import com.tony.string.controller.request.MemberUpdateRequestDTO
 import com.tony.string.controller.request.SignUpRequestDTO
-import jakarta.persistence.*
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.Table
 import org.springframework.security.crypto.password.PasswordEncoder
 import java.time.LocalDateTime
 
@@ -52,10 +59,7 @@ data class MemberEntity(
     // static 함수는 companion object 안에 정의한다.
     companion object {
         // 파라미터에 PasswordEncoder 추가
-        fun fromDto(
-            dto: SignUpRequestDTO,
-            encoder: PasswordEncoder,
-        ) = MemberEntity(
+        fun fromDto(dto: SignUpRequestDTO, encoder: PasswordEncoder, ) = MemberEntity(
             username = dto.username,
             nickname = dto.nickname,
             email = dto.email,
@@ -77,10 +81,7 @@ data class MemberEntity(
         birthDate = dto.birthDate
     }
 
-    fun passwordChange(
-        encoder: PasswordEncoder,
-        password: String,
-    ) {
+    fun passwordChange(encoder: PasswordEncoder, password: String, ) {
         this.password = encoder.encode(password)
     }
 }
