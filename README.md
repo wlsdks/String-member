@@ -11,7 +11,7 @@
 - ORM: JPA, QueryDsl
 - RDB: h2, postgreSql
 - NoSQL: Redis (SNS의 실시간성 기능에 적용예정)
-- 라이브러리: jwt, lombok, p6spy
+- 라이브러리: jwt, lombok, p6spy(쿼리 로깅), ktlint(코드 스타일 정립)
 - 배포: Dockerfile, docker-compose
 - api명세: swagger
 - 테스트 코드: Junit, gradle, mockito
