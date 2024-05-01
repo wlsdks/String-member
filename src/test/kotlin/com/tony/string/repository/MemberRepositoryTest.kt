@@ -2,7 +2,7 @@ package com.tony.string.repository
 
 import com.tony.string.JpaTestSupporter
 import com.tony.string.config.security.dto.MemberStatus
-import com.tony.string.domain.MemberEntity
+import com.tony.string.domain.Member
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.DisplayName
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
 @DisplayName("[JPA] MemberRepository 테스트")
-class MemberRepositoryJpaTest : JpaTestSupporter() {
+class MemberRepositoryTest : JpaTestSupporter() {
     @Autowired
     private lateinit var memberRepository: MemberRepository
 
@@ -53,9 +53,24 @@ class MemberRepositoryJpaTest : JpaTestSupporter() {
         Assertions.assertThat(exists).isTrue()
     }
 
+    @Test
+    fun `아이디와 상태를 통해 실존하는 유저인지 검증한다`() {
+        // Given
+        val member = createTestMemberEntity()
+        memberRepository.save(member)
+        val savedMember = memberRepository.findMemberByUsername("tony")
 
-    fun createTestMemberEntity(): MemberEntity {
-        return MemberEntity(
+        // When
+        val findMember = memberRepository.findMemberByIdAndStatus(savedMember.id, MemberStatus.ACTIVE)
+
+        // Then
+        Assertions.assertThat(findMember).isNotNull
+        Assertions.assertThat(findMember.email).isEqualTo("tony@example.com")
+        Assertions.assertThat(findMember.nickname).isEqualTo("tonyNickname")
+    }
+
+    private fun createTestMemberEntity(): Member {
+        return Member(
             username = "tony",
             nickname = "tonyNickname",
             email = "tony@example.com",
