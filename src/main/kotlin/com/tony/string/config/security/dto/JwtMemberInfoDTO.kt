@@ -3,7 +3,6 @@ package com.tony.string.config.security.dto
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.tony.string.domain.MemberEntity
 
-
 /**
  * Security JWT인증 객체
  */
@@ -13,14 +12,14 @@ data class JwtMemberInfoDTO(
     @JsonProperty("password") val password: String? = null,
     @JsonProperty("nickname") val nickname: String? = null,
     @JsonProperty("memberStatus") val memberStatus: MemberStatus? = null,
-    @JsonProperty("roleType") val roleType: RoleType? = null
+    @JsonProperty("roleType") val roleType: RoleType? = null,
 ) {
-
     // static 펙토리 메서드
     companion object {
-
-        fun fromDto(memberId: Long, email: String): JwtMemberInfoDTO =
-            JwtMemberInfoDTO(memberId, email)
+        fun fromDto(
+            memberId: Long,
+            email: String,
+        ): JwtMemberInfoDTO = JwtMemberInfoDTO(memberId, email)
 
         fun fromEntity(memberEntity: MemberEntity): JwtMemberInfoDTO =
             JwtMemberInfoDTO(
@@ -38,9 +37,7 @@ data class JwtMemberInfoDTO(
             username: String,
             nickname: String,
             status: MemberStatus?,
-            roleType: RoleType?
+            roleType: RoleType?,
         ) = JwtMemberInfoDTO(memberId, email, username, nickname, status, roleType)
-
     }
-
 }

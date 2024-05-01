@@ -14,9 +14,8 @@ import org.springframework.transaction.annotation.Transactional
 class AuthServiceImpl(
     private val jwtRepository: JwtRepository,
     private val memberRepository: MemberRepository,
-    private val memberQuerydslRepository: MemberQuerydslRepository
+    private val memberQuerydslRepository: MemberQuerydslRepository,
 ) : AuthService {
-
     val log = logger()
 
     /**
@@ -25,7 +24,7 @@ class AuthServiceImpl(
     @Transactional
     override fun logout(logoutDTO: LogoutDTO) {
         // db에서 refresh token 삭제
-        jwtRepository.deleteJwtEntityByMemberId(logoutDTO.memberId);
+        jwtRepository.deleteJwtEntityByMemberId(logoutDTO.memberId)
 
         // token blacklist에 추가
 //        jwtRepository.insertTokenBlacklist();
@@ -36,8 +35,6 @@ class AuthServiceImpl(
      */
     @Transactional
     override fun deactivateMember(memberId: Long): Long? {
-        return memberQuerydslRepository.deactivateMember(memberId);
+        return memberQuerydslRepository.deactivateMember(memberId)
     }
-
-
 }

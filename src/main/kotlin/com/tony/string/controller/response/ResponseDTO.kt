@@ -5,9 +5,8 @@ class ResponseDTO(
     val data: Any? = null,
     val error: String? = null,
     val errorCode: String? = null,
-    val message: String? = null
+    val message: String? = null,
 ) {
-
     companion object {
         fun success(data: Any): ResponseDTO {
             return ResponseDTO(success = true, data = data)
@@ -17,9 +16,11 @@ class ResponseDTO(
             return ResponseDTO(success = true, message = "Success")
         }
 
-        fun error(errorCode: String, errorMessage: String): ResponseDTO {
+        fun error(
+            errorCode: String,
+            errorMessage: String,
+        ): ResponseDTO {
             return ResponseDTO(success = false, error = errorMessage, errorCode = errorCode)
         }
     }
-
 }

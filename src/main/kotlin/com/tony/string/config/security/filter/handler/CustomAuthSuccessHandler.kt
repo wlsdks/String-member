@@ -25,14 +25,13 @@ class CustomAuthSuccessHandler(
     private val objectMapper: ObjectMapper,
     private val jwtUtils: JwtUtils,
     private val jwtService: JwtService,
-    private val authService: AuthService
+    private val authService: AuthService,
 ) : SavedRequestAwareAuthenticationSuccessHandler() {
-
     @Throws(ServletException::class, IOException::class)
     override fun onAuthenticationSuccess(
         request: HttpServletRequest?,
         response: HttpServletResponse,
-        authentication: Authentication
+        authentication: Authentication,
     ) {
         // 사용자 정보 가져오기
         val userDetails = authentication.principal as UserDetailsDto
@@ -40,7 +39,10 @@ class CustomAuthSuccessHandler(
     }
 
     // 로그인 성공 시 처리
-    private fun handleAuthenticationSuccess(userDetails: UserDetailsDto, response: HttpServletResponse) {
+    private fun handleAuthenticationSuccess(
+        userDetails: UserDetailsDto,
+        response: HttpServletResponse,
+    ) {
         // JWT 토큰 생성 (Dto를 받아서 그 정보로 토큰 생성)
         val jwtMemberInfo = userDetails.getJwtMemberInfoDTO()
         val accessToken = jwtUtils.generateAccessToken(jwtMemberInfo)
@@ -52,7 +54,10 @@ class CustomAuthSuccessHandler(
     }
 
     // Refresh Token DB에 저장 : 로그인 처리 진행
-    private fun storeRefreshToken(email: String, refreshTokenPair: Pair<String, LocalDateTime>) {
+    private fun storeRefreshToken(
+        email: String,
+        refreshTokenPair: Pair<String, LocalDateTime>,
+    ) {
         jwtService.insertRefreshTokenToDB(email, refreshTokenPair)
     }
 
@@ -61,13 +66,14 @@ class CustomAuthSuccessHandler(
         response: HttpServletResponse,
         memberId: Long,
         accessToken: String,
-        refreshToken: String
+        refreshToken: String,
     ) {
-        val tokenMap = mutableMapOf<String, Any>(
-            "memberId" to memberId,
-            "accessToken" to accessToken,
-            "refreshToken" to refreshToken
-        )
+        val tokenMap =
+            mutableMapOf<String, Any>(
+                "memberId" to memberId,
+                "accessToken" to accessToken,
+                "refreshToken" to refreshToken
+            )
         val responseDto = ResponseDTO.success(tokenMap)
 
         response.characterEncoding = "UTF-8"

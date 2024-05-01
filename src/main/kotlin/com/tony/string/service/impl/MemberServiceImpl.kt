@@ -14,9 +14,8 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class MemberServiceImpl(
     private val memberRepository: MemberRepository,
-    private val encoder: PasswordEncoder
+    private val encoder: PasswordEncoder,
 ) : MemberService {
-
     val log = logger()
 
     override fun getMemberInfo(username: String): MemberEntity {
@@ -29,15 +28,17 @@ class MemberServiceImpl(
     }
 
     override fun deleteMember(username: String?) {
-        val memberId= memberRepository.findMemberByUsername(username).id
+        val memberId = memberRepository.findMemberByUsername(username).id
         memberRepository.deleteById(memberId)
     }
 
     @Transactional
-    override fun updateMember(username: String?, requestDTO: MemberUpdateRequestDTO): MemberEntity {
+    override fun updateMember(
+        username: String?,
+        requestDTO: MemberUpdateRequestDTO,
+    ): MemberEntity {
         val member = memberRepository.findMemberByUsername(username)
         member.change(requestDTO)
         return memberRepository.save(member)
     }
-
 }

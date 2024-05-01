@@ -22,7 +22,6 @@ import java.time.ZoneId
 @PropertySource("classpath:jwt.yml")
 @Service
 class JwtUtils() {
-
     val log = logger()
 
     @Value("\${secret-key}")
@@ -38,7 +37,7 @@ class JwtUtils() {
         get() = Keys.hmacShaKeyFor(secretKeyString.toByteArray(StandardCharsets.UTF_8))
 
     companion object JwtConfig {
-        const val ACCESS_TOKEN_EXPIRATION_SECONDS = 30 * 60L// 30분
+        const val ACCESS_TOKEN_EXPIRATION_SECONDS = 30 * 60L // 30분
         const val REFRESH_TOKEN_EXPIRATION_SECONDS = 60 * 60 * 24 * 30 * 6L // 6개월
         // const val ACCESS_TOKEN_EXPIRATION_SECONDS = 30 * 24 * 60 * 60 // 30일
         // const val ACCESS_TOKEN_EXPIRATION_SECONDS = 60 * 60 * 24 * 30 // 개발용 1개월
@@ -68,13 +67,12 @@ class JwtUtils() {
      * 사용자 pk를 기준으로 Refresh Token을 발급하여 반환해 준다.
      * 이때 Refresh Token은 DB에 저장해야 한다.
      */
-    fun generateRefreshToken(
-        jwtMemberInfoDTO: JwtMemberInfoDTO
-    ): Pair<String, LocalDateTime> = generateToken(
-        jwtMemberInfoDTO,
-        REFRESH_TOKEN_EXPIRATION_SECONDS,
-        "refresh"
-    )
+    fun generateRefreshToken(jwtMemberInfoDTO: JwtMemberInfoDTO): Pair<String, LocalDateTime> =
+        generateToken(
+            jwtMemberInfoDTO,
+            REFRESH_TOKEN_EXPIRATION_SECONDS,
+            "refresh"
+        )
 
     /**
      * Pair라는 객체는 두 개의 연관된 값을 함께 그룹화하는데 사용
@@ -83,17 +81,17 @@ class JwtUtils() {
     private fun generateToken(
         jwtMemberInfoDTO: JwtMemberInfoDTO,
         expirationSeconds: Long,
-        tokenType: String
+        tokenType: String,
     ): Pair<String, LocalDateTime> {
-
         val expiryDate = LocalDateTime.now().plusSeconds(expirationSeconds)
-        val jwtBuilder = Jwts.builder()
-            .setHeader(createHeader())
-            .setClaims(createClaims(jwtMemberInfoDTO, tokenType))
-            .setSubject(jwtMemberInfoDTO.email)
-            .setIssuer(issuer)
-            .setExpiration(Date.from(expiryDate.atZone(ZoneId.systemDefault()).toInstant()))
-            .signWith(secretKey, SignatureAlgorithm.HS256)
+        val jwtBuilder =
+            Jwts.builder()
+                .setHeader(createHeader())
+                .setClaims(createClaims(jwtMemberInfoDTO, tokenType))
+                .setSubject(jwtMemberInfoDTO.email)
+                .setIssuer(issuer)
+                .setExpiration(Date.from(expiryDate.atZone(ZoneId.systemDefault()).toInstant()))
+                .signWith(secretKey, SignatureAlgorithm.HS256)
 
         log.info("generateJwtToken - Token generated for user email: " + jwtMemberInfoDTO.email)
         return Pair.of(jwtBuilder.compact(), expiryDate)
@@ -104,9 +102,8 @@ class JwtUtils() {
      */
     private fun createClaims(
         jwtMemberInfoDTO: JwtMemberInfoDTO,
-        tokenType: String
+        tokenType: String,
     ): Map<String, Any?> {
-
         val claims: MutableMap<String, Any?> = HashMap()
         claims["memberId"] = jwtMemberInfoDTO.memberId
         claims["email"] = jwtMemberInfoDTO.email
@@ -157,6 +154,4 @@ class JwtUtils() {
         val claims = getClaimsFromToken(token)
         return claims.get("role", String::class.java)
     }
-
-
 }

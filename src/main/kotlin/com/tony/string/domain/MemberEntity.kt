@@ -42,22 +42,24 @@ data class MemberEntity(
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    var status: MemberStatus?= MemberStatus.ACTIVE,
+    var status: MemberStatus? = MemberStatus.ACTIVE,
 
     @Column(name = "role_type")
     @Enumerated(EnumType.STRING)
-    val roleType: RoleType? = RoleType.MEMBER
+    val roleType: RoleType? = RoleType.MEMBER,
 
-    ) : BaseEntity() {
-
-    //static 함수는 companion object 안에 정의한다.
+) : BaseEntity() {
+    // static 함수는 companion object 안에 정의한다.
     companion object {
         // 파라미터에 PasswordEncoder 추가
-        fun fromDto(dto: SignUpRequestDTO, encoder: PasswordEncoder) = MemberEntity(
+        fun fromDto(
+            dto: SignUpRequestDTO,
+            encoder: PasswordEncoder,
+        ) = MemberEntity(
             username = dto.username,
             nickname = dto.nickname,
             email = dto.email,
-            password = encoder.encode(dto.password), //  비밀번호가 반드시 암호화된다.
+            password = encoder.encode(dto.password),
             information = dto.information ?: "",
             profileImageUrl = dto.profileImageUrl,
             location = dto.location,
@@ -75,8 +77,10 @@ data class MemberEntity(
         birthDate = dto.birthDate
     }
 
-    fun passwordChange(encoder: PasswordEncoder, password: String) {
+    fun passwordChange(
+        encoder: PasswordEncoder,
+        password: String,
+    ) {
         this.password = encoder.encode(password)
     }
-
 }
