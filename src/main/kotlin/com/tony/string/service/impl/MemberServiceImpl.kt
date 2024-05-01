@@ -2,7 +2,7 @@ package com.tony.string.service.impl
 
 import com.tony.string.controller.request.MemberUpdateRequestDTO
 import com.tony.string.controller.request.SignUpRequestDTO
-import com.tony.string.domain.MemberEntity
+import com.tony.string.domain.Member
 import com.tony.string.logger
 import com.tony.string.repository.MemberRepository
 import com.tony.string.service.MemberService
@@ -18,13 +18,13 @@ class MemberServiceImpl(
 ) : MemberService {
     val log = logger()
 
-    override fun getMemberInfo(username: String): MemberEntity {
+    override fun getMemberInfo(username: String): Member {
         return memberRepository.findMemberByUsername(username)
     }
 
     @Transactional
     override fun save(signUpRequestDTO: SignUpRequestDTO) {
-        memberRepository.save(MemberEntity.fromDto(signUpRequestDTO, encoder))
+        memberRepository.save(Member.fromDto(signUpRequestDTO, encoder))
     }
 
     override fun deleteMember(username: String?) {
@@ -36,7 +36,7 @@ class MemberServiceImpl(
     override fun updateMember(
         username: String?,
         requestDTO: MemberUpdateRequestDTO,
-    ): MemberEntity {
+    ): Member {
         val member = memberRepository.findMemberByUsername(username)
         member.change(requestDTO)
         return memberRepository.save(member)

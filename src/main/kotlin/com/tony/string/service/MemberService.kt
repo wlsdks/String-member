@@ -2,10 +2,10 @@ package com.tony.string.service
 
 import com.tony.string.controller.request.MemberUpdateRequestDTO
 import com.tony.string.controller.request.SignUpRequestDTO
-import com.tony.string.domain.MemberEntity
+import com.tony.string.domain.Member
 
 interface MemberService {
-    fun getMemberInfo(username: String): MemberEntity
+    fun getMemberInfo(username: String): Member
 
     fun save(signUpRequestDTO: SignUpRequestDTO)
 
@@ -14,5 +14,5 @@ interface MemberService {
     fun updateMember(
         username: String?,
         requestDTO: MemberUpdateRequestDTO,
-    ): MemberEntity
+    ): Member
 }

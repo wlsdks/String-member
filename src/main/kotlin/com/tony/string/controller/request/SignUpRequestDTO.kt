@@ -1,7 +1,7 @@
 package com.tony.string.controller.request
 
 import com.tony.string.config.security.dto.MemberStatus
-import com.tony.string.domain.MemberEntity
+import com.tony.string.domain.Member
 import java.time.LocalDateTime
 
 /**
@@ -18,8 +18,8 @@ data class SignUpRequestDTO(
     val location: String?,
     val birthDate: LocalDateTime?,
 ) {
-    fun toEntity(): MemberEntity {
-        return MemberEntity(
+    fun toEntity(): Member {
+        return Member(
             id = id ?: 0,
             username = username,
             nickname = nickname,

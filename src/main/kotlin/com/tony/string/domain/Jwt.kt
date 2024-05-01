@@ -10,12 +10,12 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(name = "jwt")
-data class JwtEntity(
+data class Jwt(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "jwt_id", nullable = false)
-    val id: Long?,
+    val id: Long? = 0,
 
     @Column(name = "member_id", nullable = false)
     val memberId: Long,
@@ -32,7 +32,7 @@ data class JwtEntity(
             memberId: Long,
             refreshToken: String,
             expiredDateTime: LocalDateTime,
-        ) = JwtEntity(
+        ) = Jwt(
             id = null,
             memberId = memberId,
             refreshToken = refreshToken,

@@ -4,7 +4,7 @@ import com.tony.string.config.security.dto.JwtDTO
 import com.tony.string.config.security.dto.JwtMemberInfoDTO
 import com.tony.string.config.security.dto.MemberStatus
 import com.tony.string.config.security.jwt.JwtUtils
-import com.tony.string.domain.JwtEntity
+import com.tony.string.domain.Jwt
 import com.tony.string.logger
 import com.tony.string.repository.JwtRepository
 import com.tony.string.repository.MemberRepository
@@ -32,14 +32,14 @@ class JwtServiceImpl(
         jwtPair: Pair<String, LocalDateTime>,
     ) {
         val member = memberRepository.findMemberByEmail(email)
-        val jwt = JwtEntity.of(member.id, jwtPair.first, jwtPair.second)
+        val jwt = Jwt.of(member.id, jwtPair.first, jwtPair.second)
         jwtRepository.save(jwt)
     }
 
     // access token 재발급
     override fun republishAccessToken(jwtDTO: JwtDTO): String? {
-        val jwtEntity = jwtRepository.findJwtEntityByMemberIdAndRefreshToken(jwtDTO.memberId, jwtDTO.refreshToken)
-        val validJwt = JwtEntity.isRefreshTokenValid(LocalDateTime.now(), jwtEntity.expiredDateTime)
+        val jwtEntity = jwtRepository.findJwtByMemberIdAndRefreshToken(jwtDTO.memberId, jwtDTO.refreshToken)
+        val validJwt = Jwt.isRefreshTokenValid(LocalDateTime.now(), jwtEntity.expiredDateTime)
 
         if (!validJwt) throw IllegalArgumentException("Refresh token is not valid")
 
