@@ -28,15 +28,16 @@ class CustomAuthenticationFilter(
     private val authenticationManager: AuthenticationManager,
     private val customAuthFailureHandler: CustomAuthFailureHandler,
     private val customAuthSuccessHandler: CustomAuthSuccessHandler,
-    private val objectMapper: ObjectMapper = ObjectMapper()
+    private val objectMapper: ObjectMapper = ObjectMapper(),
 ) : UsernamePasswordAuthenticationFilter() {
-
-    // 로그인 url 세팅 (빈 등록과 동시에 초기화한다.)
+    /**
+     * 필터 초기화 메서드
+     */
     @PostConstruct
     fun initialize() {
-        super.setAuthenticationManager(authenticationManager)  // AuthenticationManager 설정
-        objectMapper.registerModule(JavaTimeModule())          // JavaTimeModule 등록
-        setFilterProcessesUrl("/auth/login")                   // login URL 설정
+        super.setAuthenticationManager(authenticationManager) // AuthenticationManager 설정
+        objectMapper.registerModule(JavaTimeModule()) // JavaTimeModule 등록
+        setFilterProcessesUrl("/auth/login") // login URL 설정
         setAuthenticationSuccessHandler(customAuthSuccessHandler)
         setAuthenticationFailureHandler(customAuthFailureHandler)
     }
@@ -49,17 +50,19 @@ class CustomAuthenticationFilter(
     @Throws(AuthenticationException::class)
     override fun attemptAuthentication(
         request: HttpServletRequest,
-        response: HttpServletResponse?
+        response: HttpServletResponse?,
     ): Authentication {
         try {
-            val jwtMemberInfoDTO = objectMapper.readValue(
-                request.inputStream,
-                JwtMemberInfoDTO::class.java
-            )
-            val authRequest = UsernamePasswordAuthenticationToken(
-                jwtMemberInfoDTO.email,
-                jwtMemberInfoDTO.password
-            )
+            val jwtMemberInfoDTO =
+                objectMapper.readValue(
+                    request.inputStream,
+                    JwtMemberInfoDTO::class.java
+                )
+            val authRequest =
+                UsernamePasswordAuthenticationToken(
+                    jwtMemberInfoDTO.email,
+                    jwtMemberInfoDTO.password
+                )
             setDetails(request, authRequest)
             return authenticationManager.authenticate(authRequest)
         } catch (e: Exception) {

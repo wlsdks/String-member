@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @RestControllerAdvice
 class ExceptionHandler {
-
     val log = logger()
 
     // 다른 표준 예외들을 위한 핸들러...
@@ -71,5 +70,4 @@ class ExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
             .body(ResponseDTO.error(ErrorCode.AUTHENTICATION_FAILED.code, ErrorCode.AUTHENTICATION_FAILED.message))
     }
-
 }

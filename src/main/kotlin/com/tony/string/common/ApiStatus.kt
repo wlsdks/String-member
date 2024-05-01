@@ -1,4 +1,3 @@
 package com.tony.string.common
 
-enum class ApiStatus {
-}
+enum class ApiStatus

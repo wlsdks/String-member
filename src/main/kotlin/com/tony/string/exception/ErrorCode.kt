@@ -2,7 +2,7 @@ package com.tony.string.exception
 
 enum class ErrorCode(
     val code: String,
-    val message: String
+    val message: String,
 ) {
     // jwt 관련 에러
     INVALID_SIGNATURE("INVALID_SIGNATURE", "Invalid JWT signature."),
@@ -25,7 +25,5 @@ enum class ErrorCode(
     RUNTIME_EXCEPTION("RUNTIME_EXCEPTION", "Unexpected runtime error."),
     IO_EXCEPTION("IO_EXCEPTION", "I/O error occurred."),
 
-
     // 커스텀 예외 (생길때마다 추가)
-
 }

@@ -6,6 +6,11 @@ import java.time.LocalDateTime
 
 interface JwtService {
     fun isLoggedIn(memberId: Long): Boolean
-    fun insertRefreshTokenToDB(email: String, jwtPair: Pair<String, LocalDateTime>)
+
+    fun insertRefreshTokenToDB(
+        email: String,
+        jwtPair: Pair<String, LocalDateTime>,
+    )
+
     fun republishAccessToken(jwtDTO: JwtDTO): String?
 }

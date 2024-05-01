@@ -13,9 +13,11 @@ import org.springframework.stereotype.Service
  */
 @Service
 class SecurityUserDetailsService(
-    private val memberRepository: MemberRepository
+    private val memberRepository: MemberRepository,
 ) : UserDetailsService {
-
+    /**
+     * 사용자 정보를 조회하는 메서드
+     */
     override fun loadUserByUsername(email: String): UserDetails {
         // 회원을 조회한 후 JwtMemberInfoDTO 객체로 변환
         val member = memberRepository.findMemberByEmail(email)
@@ -27,5 +29,4 @@ class SecurityUserDetailsService(
             setOf(SimpleGrantedAuthority(jwtMemberInfoDTO.roleType.toString()))
         )
     }
-
 }

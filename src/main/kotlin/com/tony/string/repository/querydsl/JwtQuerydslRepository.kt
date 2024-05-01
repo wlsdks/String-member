@@ -5,9 +5,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class JwtQuerydslRepository(
-    private val jpaQueryFactory: JPAQueryFactory
-){
-
-
-
-}
+    private val jpaQueryFactory: JPAQueryFactory,
+)

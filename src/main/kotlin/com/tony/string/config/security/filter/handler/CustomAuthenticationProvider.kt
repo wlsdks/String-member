@@ -2,13 +2,16 @@ package com.tony.string.config.security.filter.handler
 
 import com.tony.string.config.security.dto.MemberStatus
 import com.tony.string.config.security.dto.UserDetailsDto
-import org.springframework.security.authentication.*
+import org.springframework.security.authentication.AccountExpiredException
+import org.springframework.security.authentication.AuthenticationProvider
+import org.springframework.security.authentication.BadCredentialsException
+import org.springframework.security.authentication.DisabledException
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Component
-
 
 /**
  * 3. '인증' 제공자로 사용자의 이름과 비밀번호가 요구된다.
@@ -18,9 +21,8 @@ import org.springframework.stereotype.Component
 @Component
 class CustomAuthenticationProvider(
     private val userDetailsService: UserDetailsService,
-    private val bCryptPasswordEncoder: BCryptPasswordEncoder
+    private val bCryptPasswordEncoder: BCryptPasswordEncoder,
 ) : AuthenticationProvider {
-
     /**
      * 메인 인증 클래스
      */
@@ -52,14 +54,20 @@ class CustomAuthenticationProvider(
     }
 
     // 암호화된 비밀번호 비교
-    private fun validatePassword(providedPassword: String, userDetails: UserDetailsDto) {
+    private fun validatePassword(
+        providedPassword: String,
+        userDetails: UserDetailsDto,
+    ) {
         if (!bCryptPasswordEncoder.matches(providedPassword, userDetails.getJwtMemberInfoDTO().password)) {
             throw BadCredentialsException("유저를 찾을 수 없습니다.")
         }
     }
 
     // 인증 성공 시 반환 객체 생성 및 반환
-    private fun createSuccessAuthentication(credentials: Any, userDetails: UserDetailsDto): Authentication {
+    private fun createSuccessAuthentication(
+        credentials: Any,
+        userDetails: UserDetailsDto,
+    ): Authentication {
         return UsernamePasswordAuthenticationToken(
             userDetails,
             credentials,

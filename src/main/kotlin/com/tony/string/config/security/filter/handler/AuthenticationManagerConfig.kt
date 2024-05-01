@@ -14,12 +14,10 @@ import org.springframework.security.authentication.ProviderManager
  */
 @Configuration
 class AuthenticationManagerConfig(
-    private val customAuthenticationProvider: CustomAuthenticationProvider
+    private val customAuthenticationProvider: CustomAuthenticationProvider,
 ) {
-
     @Bean
     fun authenticationManager(): AuthenticationManager {
         return ProviderManager(listOf(customAuthenticationProvider))
     }
-
 }

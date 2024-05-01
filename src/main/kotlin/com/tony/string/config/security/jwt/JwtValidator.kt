@@ -12,12 +12,15 @@ import org.springframework.stereotype.Component
 @Component
 class JwtValidator(
     private val memberRepository: MemberRepository,
-    private val jwtUtils: JwtUtils
+    private val jwtUtils: JwtUtils,
 ) {
     val log = logger()
 
     // 토큰이 유효한지 검증한다. (tokenType에는 access, refresh가 들어온다.)
-    fun isValidToken(token: String?, tokenType: String): Boolean {
+    fun isValidToken(
+        token: String?,
+        tokenType: String,
+    ): Boolean {
         token ?: run {
             log.debug("Token is null")
             return false
@@ -32,7 +35,10 @@ class JwtValidator(
     }
 
     // 토큰의 클레임을 검증한다.
-    private fun validateTokenClaims(token: String, tokenType: String): Boolean {
+    private fun validateTokenClaims(
+        token: String,
+        tokenType: String,
+    ): Boolean {
         val claims = jwtUtils.getClaimsFromToken(token)
         val type = claims.get("type", String::class.java)
 
@@ -43,10 +49,11 @@ class JwtValidator(
         }
 
         // 이메일 값이 null이면 run 블록을 실행한다.
-        val email = claims.get("email", String::class.java) ?: run {
-            log.debug("Email from token is null")
-            return false
-        }
+        val email =
+            claims.get("email", String::class.java) ?: run {
+                log.debug("Email from token is null")
+                return false
+            }
         return checkActiveMember(email)
     }
 
@@ -54,5 +61,4 @@ class JwtValidator(
     private fun checkActiveMember(email: String): Boolean {
         return memberRepository.existsMemberByEmailAndStatus(email, MemberStatus.ACTIVE)
     }
-
 }

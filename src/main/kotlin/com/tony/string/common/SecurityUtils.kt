@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component
 
 @Component
 class SecurityUtils {
-
     // 현재 인증된 사용자의 TokenMemberInfoDto를 가져온다.
     fun getCurrentTokenMemberInfoDto(): JwtMemberInfoDTO {
-        val authentication = SecurityContextHolder.getContext().authentication
-            ?: throw CustomException(ErrorCode.AUTHENTICATION_NOT_FOUND, "인증 정보를 찾을 수 없습니다.")
+        val authentication =
+            SecurityContextHolder.getContext().authentication
+                ?: throw CustomException(ErrorCode.AUTHENTICATION_NOT_FOUND, "인증 정보를 찾을 수 없습니다.")
 
         if (!authentication.isAuthenticated) {
             throw CustomException(ErrorCode.UNAUTHENTICATED, "사용자가 인증되지 않았습니다.")
@@ -38,5 +38,4 @@ class SecurityUtils {
 
     // 현재 인증된 사용자의 email을 가져온다.
     fun getCurrentMemberEmail(): String = getCurrentTokenMemberInfoDto().email
-
 }

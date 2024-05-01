@@ -8,9 +8,8 @@ import java.time.LocalDateTime
 
 @Repository
 class MemberQuerydslRepository(
-    private val jpaQueryFactory: JPAQueryFactory
+    private val jpaQueryFactory: JPAQueryFactory,
 ) {
-
     // 회원 탈퇴 (soft delete: 1주일간은 deactive 상태로 유지하고 그 이후에 삭제)
     fun deactivateMember(memberId: Long): Long? {
         return jpaQueryFactory
@@ -20,5 +19,4 @@ class MemberQuerydslRepository(
             .where(memberEntity.id.eq(memberId))
             .execute()
     }
-
 }

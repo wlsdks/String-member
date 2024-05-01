@@ -6,9 +6,8 @@ import org.springframework.security.core.userdetails.UserDetails
 
 class UserDetailsDto(
     private val jwtMemberInfoDTO: JwtMemberInfoDTO,
-    private val authorities: Collection<GrantedAuthority?>
+    private val authorities: Collection<GrantedAuthority?>,
 ) : UserDetails {
-
     fun getJwtMemberInfoDTO(): JwtMemberInfoDTO {
         return jwtMemberInfoDTO
     }

@@ -5,10 +5,13 @@ package com.tony.string.domain.dto
  */
 data class LogoutDTO(
     val memberId: Long,
-    val accessToken: String
+    val accessToken: String,
 ) {
     companion object {
-        fun of(memberId: Long, accessToken: String): LogoutDTO {
+        fun of(
+            memberId: Long,
+            accessToken: String,
+        ): LogoutDTO {
             return LogoutDTO(memberId, accessToken)
         }
     }

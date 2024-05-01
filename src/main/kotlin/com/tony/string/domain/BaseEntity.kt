@@ -18,6 +18,6 @@ abstract class BaseEntity(
 
     @LastModifiedDate
     @Column(name = "updated_at", nullable = false)
-    protected var updatedAt: LocalDateTime = LocalDateTime.MIN
+    protected var updatedAt: LocalDateTime = LocalDateTime.MIN,
 
 )

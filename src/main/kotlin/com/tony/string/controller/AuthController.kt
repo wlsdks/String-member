@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.RestController
 class AuthController(
     private val authService: AuthService,
     private val jwtUtils: JwtUtils,
-    private val securityUtils: SecurityUtils
+    private val securityUtils: SecurityUtils,
 ) {
-
     /**
      * 로그아웃
      */
@@ -36,5 +35,4 @@ class AuthController(
 
         return LogoutDTO.of(securityUtils.getCurrentMemberId(), accessToken!!)
     }
-
 }

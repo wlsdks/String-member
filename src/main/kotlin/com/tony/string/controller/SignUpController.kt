@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/member")
 @RestController
 class SignUpController(
-    private val memberServiceImpl: MemberServiceImpl
+    private val memberServiceImpl: MemberServiceImpl,
 ) {
-
     @PostMapping("/signUp")
-    fun createMember(@RequestBody signUpRequestDTO: SignUpRequestDTO) =
-        memberServiceImpl.save(signUpRequestDTO)
-
+    fun createMember(
+        @RequestBody signUpRequestDTO: SignUpRequestDTO,
+    ) = memberServiceImpl.save(signUpRequestDTO)
 }

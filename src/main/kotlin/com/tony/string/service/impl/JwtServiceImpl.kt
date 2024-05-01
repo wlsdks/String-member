@@ -19,17 +19,18 @@ import java.time.LocalDateTime
 class JwtServiceImpl(
     private val jwtRepository: JwtRepository,
     private val memberRepository: MemberRepository,
-    private val jwtUtils: JwtUtils
+    private val jwtUtils: JwtUtils,
 ) : JwtService {
-
     val log = logger()
 
     // 로그인 여부 확인
-    override fun isLoggedIn(memberId: Long): Boolean =
-        memberRepository.existsById(memberId)
+    override fun isLoggedIn(memberId: Long): Boolean = memberRepository.existsById(memberId)
 
     // refresh token을 DB에 저장
-    override fun insertRefreshTokenToDB(email: String, jwtPair: Pair<String, LocalDateTime>) {
+    override fun insertRefreshTokenToDB(
+        email: String,
+        jwtPair: Pair<String, LocalDateTime>,
+    ) {
         val member = memberRepository.findMemberByEmail(email)
         val jwt = JwtEntity.of(member.id, jwtPair.first, jwtPair.second)
         jwtRepository.save(jwt)
@@ -43,16 +44,16 @@ class JwtServiceImpl(
         if (!validJwt) throw IllegalArgumentException("Refresh token is not valid")
 
         val member = memberRepository.findMemberByIdAndStatus(jwtDTO.memberId, MemberStatus.ACTIVE)
-        val jwtMemberInfoDTO = JwtMemberInfoDTO.of(
-            member.id,
-            member.email,
-            member.username,
-            member.nickname,
-            member.status,
-            member.roleType
-        )
+        val jwtMemberInfoDTO =
+            JwtMemberInfoDTO.of(
+                member.id,
+                member.email,
+                member.username,
+                member.nickname,
+                member.status,
+                member.roleType
+            )
 
         return jwtUtils.generateAccessToken(jwtMemberInfoDTO)
     }
-
 }

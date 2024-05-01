@@ -25,16 +25,19 @@ class JwtAuthenticationFilter(
     private val jwtValidator: JwtValidator,
     private val jwtUtils: JwtUtils,
 ) : OncePerRequestFilter() {
-
     val log = logger()
-    private val AUTHORIZATION_HEADER = "Authorization"
-    private val ACCESS_TOKEN_TYPE = "access"
+
+    // companion object를 사용하여 상수를 정의
+    companion object {
+        const val AUTHORIZATION_HEADER = "Authorization"
+        const val ACCESS_TOKEN_TYPE = "access"
+    }
 
     @Throws(ServletException::class, IOException::class)
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        filterChain: FilterChain
+        filterChain: FilterChain,
     ) {
         val token = extractToken(request.getHeader(AUTHORIZATION_HEADER))
 

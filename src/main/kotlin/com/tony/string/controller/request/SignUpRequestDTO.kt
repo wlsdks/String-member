@@ -18,7 +18,6 @@ data class SignUpRequestDTO(
     val location: String?,
     val birthDate: LocalDateTime?,
 ) {
-
     fun toEntity(): MemberEntity {
         return MemberEntity(
             id = id ?: 0,

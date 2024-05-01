@@ -9,5 +9,4 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @AdminAuthorize
 @RequestMapping("/admin")
-class AdminController {
-}
+class AdminController
