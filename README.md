@@ -14,7 +14,19 @@
 - 라이브러리: jwt, lombok, p6spy(쿼리 로깅), ktlint(코드 스타일 정립)
 - 배포: Dockerfile, docker-compose
 - api명세: swagger
+- 인증(ssl) : openssl(로컬)
 - 테스트 코드: Junit, gradle, mockito
+
+### DevOps : 로컬 (k8s 구성)
+- **서버 구성** : SpringBoot
+- **CI/CD**: Jenkins, Github hook, Sonarqube
+- **DB** : PostgreSQL, Redis, Kafka
+- **모니터링**: Prometheus, Grafana, Slack API
+- **로그**: ELK (Elastic search, Kibana, Logstash)
+- **성능테스트**: nGrinder, JMeter
+
+### 인프라 구성 : AWS
+- EKS 사용예정
 
 ### 아키텍처
 - 모놀리식 프로젝트 (추후 MSA로 변환 가능성 있음)
@@ -30,12 +42,6 @@
 - 환경설정(yml)은 local, prod, test 총3개로 분리되어있음 (local, prod는 postgreSQL을 사용하고 test는 h2 db를 사용한다.)
 - CI/CD는 깃허브의 hook을 사용하며 소나큐브를 통해 코드를 테스트한 후 배포가 진행되도록 설계
 - 롤링 배포방식으로 무중단 배포가 가능하도록 설계
-
-### DevOps
-- **CI/CD**: Jenkins, Github hook, Sonarqube
-- **모니터링**: Prometheus, Grafana, Slack API
-- **로그**: ELK
-- **성능테스트**: nGrinder, JMeter
 
 ### 서버 실행 방법 (local)
 - Dockerfile로 서버를 이미지화 시키고 이 설정을 docker-compose.yml에 연결하여 빌드한 스프링 서버와 postgreSql을 동시에 컨테이너에 올린다.
