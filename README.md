@@ -22,10 +22,10 @@
 - **CI/CD**: Jenkins, Github hook, Sonarqube
 - **DB** : PostgreSQL, Redis, Kafka
 - **모니터링**: Prometheus, Grafana, Slack API
-- **로그**: ELK (Elastic search, Kibana, Logstash)
+- **로그, 통합검색**: ELK (Elastic search, Kibana, Logstash)
 - **성능테스트**: nGrinder, JMeter
 
-### 인프라 구성 : AWS
+### DevOps : 상용 (EKS 구성)
 - EKS 사용예정
 
 ### 아키텍처
