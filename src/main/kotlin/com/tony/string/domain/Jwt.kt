@@ -14,7 +14,7 @@ data class Jwt(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "jwt_id", nullable = false)
+    @Column(name = "id", nullable = false)
     val id: Long? = 0,
 
     @Column(name = "member_id", nullable = false)

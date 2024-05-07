@@ -21,6 +21,7 @@ data class Member(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     val id: Long = 0,
 
     @Column(name = "username", nullable = false)
@@ -53,7 +54,7 @@ data class Member(
 
     @Column(name = "role_type")
     @Enumerated(EnumType.STRING)
-    val roleType: RoleType? = RoleType.MEMBER,
+    var roleType: RoleType? = RoleType.MEMBER,
 
 ) : BaseEntity() {
     // static 함수는 companion object 안에 정의한다.
