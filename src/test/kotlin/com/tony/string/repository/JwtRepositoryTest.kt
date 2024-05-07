@@ -10,7 +10,6 @@ import java.time.LocalDateTime
 
 @DisplayName("[JPA] JwtRepository 테스트")
 class JwtRepositoryTest : JpaTestSupporter() {
-
     @Autowired
     private lateinit var jwtRepository: JwtRepository
 
@@ -42,7 +41,7 @@ class JwtRepositoryTest : JpaTestSupporter() {
         Assertions.assertThat(findJwt.refreshToken).isEqualTo(savedJwt.refreshToken)
     }
 
-    private fun createTestJwtEntity() : Jwt {
+    private fun createTestJwtEntity(): Jwt {
         return Jwt(
             memberId = 1L,
             refreshToken = "refreshToken",
