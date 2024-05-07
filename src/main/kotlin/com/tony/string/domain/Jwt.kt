@@ -10,24 +10,29 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(name = "jwt")
-data class JwtEntity(
+data class Jwt(
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "jwt_id", nullable = false)
-    val id: Long?,
+    val id: Long? = 0,
+
     @Column(name = "member_id", nullable = false)
     val memberId: Long,
+
     @Column(name = "refresh_token", nullable = false, length = 500)
     val refreshToken: String,
+
     @Column(name = "expired_datetime", nullable = false)
     val expiredDateTime: LocalDateTime,
+
 ) {
     companion object {
         fun of(
             memberId: Long,
             refreshToken: String,
             expiredDateTime: LocalDateTime,
-        ) = JwtEntity(
+        ) = Jwt(
             id = null,
             memberId = memberId,
             refreshToken = refreshToken,

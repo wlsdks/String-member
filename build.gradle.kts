@@ -7,13 +7,9 @@ plugins {
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.spring") version "1.9.23"
     kotlin("plugin.jpa") version "1.9.23"
-
-    // querydsl을 위해 kapt 추가
-    kotlin("kapt") version "1.9.21"
-
-    // kotlin 코드 컨벤션을 위한 ktlint 추가
-    id("org.jlleitschuh.gradle.ktlint").version("12.1.0")
-// 	id("org.jlleitschuh.gradle.ktlint-idea").version("12.1.0")
+    kotlin("kapt") version "1.9.23"                         // querydsl을 위해 kapt 추가
+    id("org.jlleitschuh.gradle.ktlint").version("12.1.0")   // kotlin 코드 컨벤션을 위한 ktlint 추가
+    id("com.google.cloud.tools.jib") version "3.4.2"        // docker 대신 JIB 사용
 }
 
 group = "com.tony"
@@ -106,9 +102,6 @@ tasks.named("clean") {
     }
 }
 
-kapt {
-    generateStubs = true
-}
 // Querydsl 설정 완료
 
 tasks.withType<KotlinCompile> {
@@ -126,5 +119,34 @@ configure<KtlintExtension> {
     filter {
         // 'entity' 패키지 안의 모든 Kotlin 파일을 검사에서 제외
         exclude("**/domain/**")
+    }
+}
+
+val dockerUsername: String by project
+val dockerPassword: String by project
+
+jib {
+    // 애플리케이션을 빌드할 기본 이미지를 구성
+    from {
+        image = "eclipse-temurin:21.0.3_9-jre-ubi9-minimal"
+    }
+    // 애플리케이션을 빌드할 대상 이미지를 구성
+    to {
+        image = "wlsdks12/string-server"
+        tags = setOf("0.0.3")
+
+        auth {
+            username = dockerUsername
+            password = dockerPassword
+        }
+    }
+    // 빌드된 이미지에서 실행될 컨테이너를 구성
+    container {
+        jvmFlags = listOf(
+            "-Dspring.profiles.active=local",
+            "-Dfile.encoding=UTF-8",
+        )
+        ports = listOf("8080")
+        setAllowInsecureRegistries(true)  // 보안이 적용되지 않은 registry 연결 허용
     }
 }

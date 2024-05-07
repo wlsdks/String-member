@@ -1,7 +1,7 @@
 package com.tony.string.config.security.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.tony.string.domain.MemberEntity
+import com.tony.string.domain.Member
 
 /**
  * Security JWT인증 객체
@@ -21,14 +21,14 @@ data class JwtMemberInfoDTO(
             email: String,
         ): JwtMemberInfoDTO = JwtMemberInfoDTO(memberId, email)
 
-        fun fromEntity(memberEntity: MemberEntity): JwtMemberInfoDTO =
+        fun fromEntity(member: Member): JwtMemberInfoDTO =
             JwtMemberInfoDTO(
-                memberEntity.id,
-                memberEntity.email,
-                memberEntity.password,
-                memberEntity.nickname,
-                memberEntity.status,
-                memberEntity.roleType
+                member.id,
+                member.email,
+                member.password,
+                member.nickname,
+                member.status,
+                member.roleType
             )
 
         fun of(

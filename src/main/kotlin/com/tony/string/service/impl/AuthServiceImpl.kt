@@ -24,7 +24,7 @@ class AuthServiceImpl(
     @Transactional
     override fun logout(logoutDTO: LogoutDTO) {
         // db에서 refresh token 삭제
-        jwtRepository.deleteJwtEntityByMemberId(logoutDTO.memberId)
+        jwtRepository.deleteJwtByMemberId(logoutDTO.memberId)
 
         // token blacklist에 추가
 //        jwtRepository.insertTokenBlacklist();

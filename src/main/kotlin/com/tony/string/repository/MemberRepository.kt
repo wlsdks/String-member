@@ -1,21 +1,21 @@
 package com.tony.string.repository
 
 import com.tony.string.config.security.dto.MemberStatus
-import com.tony.string.domain.MemberEntity
+import com.tony.string.domain.Member
 import org.springframework.data.jpa.repository.JpaRepository
 
-interface MemberRepository : JpaRepository<MemberEntity, Long> {
-    fun findMemberByUsername(username: String?): MemberEntity
+interface MemberRepository : JpaRepository<Member, Long> {
+    fun findMemberByUsername(username: String?): Member
+
+    fun findMemberByEmail(email: String): Member
 
     fun existsMemberByEmailAndStatus(
         email: String,
         active: MemberStatus,
     ): Boolean
 
-    fun findMemberByEmail(email: String): MemberEntity
-
     fun findMemberByIdAndStatus(
         memberId: Long,
         active: MemberStatus,
-    ): MemberEntity
+    ): Member
 }
