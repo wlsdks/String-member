@@ -13,6 +13,7 @@ import io.kotest.core.annotation.DisplayName
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import jakarta.xml.bind.ValidationException
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.repository.findByIdOrNull
 
@@ -40,8 +41,8 @@ class PostServiceImplTest(
                 post?.member?.nickname shouldBe "tony"
             }
         }
-        When("작성한 유저가 존재하지 않으면") {
-            then("작성한 유저가 존재하지 않는 유저이면 예외가 발생한다.") {
+        When("작성한 유저가 DB상에 존재하지 않으면") {
+            then("예외가 발생한다.") {
                 shouldThrow<CustomException> {
                     postService.createPost(createNotValidPostRequestDTO())
                 }
