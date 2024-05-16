@@ -12,11 +12,11 @@ data class Comment(
     val id: Long = 0,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "post_id", nullable = false)
     var post: Post,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "member_id", nullable = false)
     var member: Member,
 
     @Column(name = "content", nullable = false)

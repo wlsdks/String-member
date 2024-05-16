@@ -12,11 +12,11 @@ data class PostHashtagMap(
     val id: Long = 0,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "post_id", nullable = false)
     var post: Post,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "hashtag_id", nullable = false)
     var hashtag: Hashtag,
 
     )

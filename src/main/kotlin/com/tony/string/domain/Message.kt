@@ -13,11 +13,11 @@ data class Message(
     val id: Long = 0,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "sender_id", nullable = false)
     var sender: Member,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "receiver_id", nullable = false)
     var receiver: Member,
 
     @Column(name = "content", nullable = false)

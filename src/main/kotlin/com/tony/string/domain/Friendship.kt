@@ -13,11 +13,11 @@ data class Friendship(
     val id: Long = 0,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "member_id", nullable = false)
     var memberId: Member,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "friend_id", nullable = false)
     var friend: Member,
 
 ) : BaseEntity()

@@ -13,7 +13,7 @@ data class OAuth(
     val id: Long = 0,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "member_id", nullable = false)
     var member: Member,
 
     @Column(name = "provider", nullable = false)

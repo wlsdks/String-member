@@ -13,11 +13,11 @@ data class GuildMemberMap(
     val id: Long = 0,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "guild_id", nullable = false)
     var group: Guild,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "member_id", nullable = false)
     var member: Member,
 
     @Column(name = "role", nullable = false)
