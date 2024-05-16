@@ -66,7 +66,7 @@ class CustomAuthenticationFilter(
             setDetails(request, authRequest)
             return authenticationManager.authenticate(authRequest)
         } catch (e: Exception) {
-            throw CustomException(ErrorCode.FILTER_USERNAME_PASSWORD_AUTHENTICATION_TOKEN_EXCEPTION, e.message!!)
+            throw CustomException(ErrorCode.FILTER_USERNAME_PASSWORD_AUTHENTICATION_TOKEN_EXCEPTION)
         }
     }
 }

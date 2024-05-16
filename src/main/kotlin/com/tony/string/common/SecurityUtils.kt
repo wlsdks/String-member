@@ -12,10 +12,10 @@ class SecurityUtils {
     fun getCurrentTokenMemberInfoDto(): JwtMemberInfoDTO {
         val authentication =
             SecurityContextHolder.getContext().authentication
-                ?: throw CustomException(ErrorCode.AUTHENTICATION_NOT_FOUND, "인증 정보를 찾을 수 없습니다.")
+                ?: throw CustomException(ErrorCode.AUTHENTICATION_NOT_FOUND)
 
         if (!authentication.isAuthenticated) {
-            throw CustomException(ErrorCode.UNAUTHENTICATED, "사용자가 인증되지 않았습니다.")
+            throw CustomException(ErrorCode.UNAUTHENTICATED)
         }
 
         /**
@@ -24,10 +24,7 @@ class SecurityUtils {
          */
         val jwtMemberInfoDTO = authentication.principal
         if (jwtMemberInfoDTO !is JwtMemberInfoDTO) {
-            throw CustomException(
-                ErrorCode.PRINCIPAL_NOT_CORRECT_TYPE,
-                "시큐리티의 Principle 타입이 JwtMemberInfoDTO 타입이 아닙니다."
-            )
+            throw CustomException(ErrorCode.PRINCIPAL_NOT_CORRECT_TYPE)
         }
 
         return jwtMemberInfoDTO

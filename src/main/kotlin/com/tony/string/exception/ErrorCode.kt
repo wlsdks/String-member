@@ -26,4 +26,6 @@ enum class ErrorCode(
     IO_EXCEPTION("IO_EXCEPTION", "I/O error occurred."),
 
     // 커스텀 예외 (생길때마다 추가)
+    MEMBER_NOT_FOUND("MEMBER_NOT_FOUND", "해당 게시글을 찾을 수 없습니다."),
+    POST_NOT_FOUND("POST_NOT_FOUND", "해당 게시글을 찾을 수 없습니다."),
 }
