@@ -57,10 +57,12 @@ data class Member(
     var roleType: RoleType? = RoleType.MEMBER,
 
 ) : BaseEntity() {
-    // static 함수는 companion object 안에 정의한다.
+
+    // 펙토리 메서드 선언
     companion object {
+
         // 파라미터에 PasswordEncoder 추가
-        fun fromDto(dto: SignUpRequestDTO, encoder: PasswordEncoder, ) = Member(
+        fun fromDto(dto: SignUpRequestDTO, encoder: PasswordEncoder) = Member(
             username = dto.username,
             nickname = dto.nickname,
             email = dto.email,
@@ -71,8 +73,27 @@ data class Member(
             birthDate = dto.birthDate,
             status = MemberStatus.ACTIVE
         )
-    }
 
+        // 테스트용 펙토리 메서드
+        fun of(id: Long, username: String, nickname: String, email: String, password: String, information: String) =
+            Member(
+                id = id,
+                username = username,
+                nickname = nickname,
+                email = email,
+                password = password,
+                information = information,
+                null,
+                null,
+                null
+            )
+
+        // 저장할때는 엔티티의 id값만 있으면 된다.
+        fun fromId(id: Long): Member {
+            return Member(id = id, "", "", "", "", "", "", "", null)
+        }
+
+    }
     fun change(dto: MemberUpdateRequestDTO) {
         username = dto.username
         email = dto.email
@@ -82,7 +103,7 @@ data class Member(
         birthDate = dto.birthDate
     }
 
-    fun passwordChange(encoder: PasswordEncoder, password: String, ) {
+    fun passwordChange(encoder: PasswordEncoder, password: String) {
         this.password = encoder.encode(password)
     }
 }
