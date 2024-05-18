@@ -145,7 +145,7 @@ jib {
     // 애플리케이션을 빌드할 대상 이미지를 구성
     to {
         image = "wlsdks12/string-server"
-        tags = setOf("0.0.3")
+        tags = setOf("0.0.6")
 
         auth {
             username = dockerUsername
@@ -159,6 +159,10 @@ jib {
             "-Dfile.encoding=UTF-8",
         )
         ports = listOf("8080")
-        setAllowInsecureRegistries(true)  // 보안이 적용되지 않은 registry 연결 허용
+        environment = mapOf(
+            "SPRING_PROFILES_ACTIVE" to "local",
+        )
+        // 보안이 적용되지 않은 registry 연결 허용
+        setAllowInsecureRegistries(true)
     }
 }
