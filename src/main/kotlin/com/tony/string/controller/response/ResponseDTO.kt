@@ -1,5 +1,8 @@
 package com.tony.string.controller.response
 
+/**
+ * 응답 DTO
+ */
 class ResponseDTO(
     val success: Boolean,
     val data: Any? = null,
